@@ -1,43 +1,56 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
-
-# dependencies
+# 🧱 Dependencias
 node_modules/
 
-# Expo
-.expo/
+# ⚙️ Archivos de compilación / build
 dist/
 web-build/
+build/
 expo-env.d.ts
 
-# Native
-.kotlin/
-*.orig.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
+# 📦 Expo
+.expo/
+.expo-shared/
 
-# Metro
+# ⚙️ Archivos nativos generados
+ios/
+android/
+
+# 💡 Configuración temporal / estado
 .metro-health-check*
-
-# debug
 npm-debug.*
 yarn-debug.*
 yarn-error.*
 
-# macOS
-.DS_Store
-*.pem
-
-# local env files
+# 🧩 Archivos de entorno (NO subir API keys, etc.)
+.env
 .env*.local
 
-# typescript
+# 🧰 Tipos y caché de TypeScript
 *.tsbuildinfo
 
-app-example
+# 🧼 macOS / SO
+.DS_Store
 
-# generated native folders
-/ios
-/android
+# 🔒 Claves, certificados o perfiles
+*.jks
+*.p8
+*.p12
+*.key
+*.pem
+*.mobileprovision
+
+# 🧪 Archivos temporales o ejemplos
+app-example/
+temp/
+.tmp/
+
+# 🧩 Logs y reportes
+*.log
+
+# 🚫 Carpetas de pruebas locales
+/.idea
+/.vscode
+
+# 🧑‍💻 Archivos de empaquetado
+package-lock.json
+yarn.lock

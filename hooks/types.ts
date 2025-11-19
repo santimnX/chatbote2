@@ -3,3 +3,4 @@ export interface Message {
     role: "user" | "bot"; // quién envía el mensaje
     content: string;      // contenido del mensaje (texto)
   }
+  

@@ -1,43 +1,42 @@
-import React from "react";
-import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
-import MessageBubble from "./MessageBubble";
-import ChatInput from "./ChatInput";
-import { Message } from "../utils/types";
+// components/ChatBot.tsx
+import React from 'react';
+import { View, FlatList } from 'react-native';
+import MessageBubble from './MessageBubble';
+import ChatInput from './ChatInput';
+import { ChatBotProps } from '@/types';
 
-interface Props {
-  messages: Message[];
-  inputValue: string;
-  onChangeInput: (text: string) => void;
-  onSend: () => void;
-  loading?: boolean;
-}
-
-export default function ChatBot({
-  messages,
-  inputValue,
-  onChangeInput,
-  onSend,
-  loading,
-}: Props) {
+export default function ChatBot({ 
+  messages, 
+  inputValue, 
+  onChangeInput, 
+  onSend, 
+  loading = false 
+}: ChatBotProps) {
+  
   return (
-    <KeyboardAvoidingView
-      className="flex-1 bg-white"
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <View className="flex-1 px-4 py-6">
-        <ScrollView className="flex-1 mb-3">
-          {messages.map((msg) => (
-            <MessageBubble key={msg.id} message={msg} />
-          ))}
-        </ScrollView>
-
-        <ChatInput
-          value={inputValue}
-          onChange={onChangeInput}
-          onSend={onSend}
-          loading={loading}
-        />
-      </View>
-    </KeyboardAvoidingView>
+    <View className="flex-1 bg-gray-50">
+      {/* Lista de mensajes */}
+      <FlatList
+        data={messages}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <MessageBubble 
+            text={item.text} 
+            isUser={item.isUser} 
+            timestamp={item.timestamp}
+          />
+        )}
+        className="flex-1 p-4"
+        contentContainerStyle={{ paddingBottom: 20 }}
+      />
+      
+      {/* Input de chat - PASA las props correctamente */}
+      <ChatInput
+        value={inputValue}
+        onChangeText={onChangeInput}
+        onSend={onSend}
+        loading={loading}
+      />
+    </View>
   );
 }

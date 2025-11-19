@@ -1,34 +1,38 @@
-import React from "react";
-import { View, TextInput, Pressable, Text } from "react-native";
+// components/ChatInput.tsx
+import React from 'react';
+import { View, TextInput, TouchableOpacity, ActivityIndicator, Text } from 'react-native';
 
-interface Props {
+interface ChatInputProps {
   value: string;
-  onChange: (text: string) => void;
-  onSend: () => void;
+  onChangeText: (text: string) => void;
+  onSend: () => void;  // Asegúrate de que esté definido
   loading?: boolean;
 }
 
-export default function ChatInput({ value, onChange, onSend, loading }: Props) {
+export default function ChatInput({ value, onChangeText, onSend, loading }: ChatInputProps) {
   return (
-    <View className="flex-row items-center">
+    <View className="flex-row items-center p-4 border-t border-gray-300 bg-white">
       <TextInput
+        className="flex-1 border border-gray-300 rounded-full px-4 py-3 mr-2"
+        placeholder="Escribe tu mensaje..."
         value={value}
-        onChangeText={onChange}
-        placeholder="Escribe un mensaje..."
-        className="flex-1 border border-gray-300 rounded-xl px-3 py-2 mr-2"
+        onChangeText={onChangeText}
+        onSubmitEditing={onSend} // También funciona al presionar enter
         editable={!loading}
       />
-      <Pressable
-        onPress={onSend}
-        disabled={loading}
-        className={`rounded-xl px-4 py-2 ${
-          loading ? "bg-gray-400" : "bg-blue-500"
+      <TouchableOpacity
+        className={`w-12 h-12 rounded-full items-center justify-center ${
+          loading || !value.trim() ? 'bg-gray-400' : 'bg-blue-500'
         }`}
+        onPress={onSend} // Aquí se usa onSend
+        disabled={loading || !value.trim()}
       >
-        <Text className="text-white font-semibold">
-          {loading ? "..." : "Enviar"}
-        </Text>
-      </Pressable>
+        {loading ? (
+          <ActivityIndicator size="small" color="white" />
+        ) : (
+          <Text className="text-white text-lg">↑</Text>
+        )}
+      </TouchableOpacity>
     </View>
   );
 }
